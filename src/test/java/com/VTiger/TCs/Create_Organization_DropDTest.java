@@ -1,54 +1,64 @@
-package com.VTiger.TCs;
+package pom.VtigerTcs;
 
+import java.io.IOException;
 import java.util.Random;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.support.ui.Select;
 
+import com.ObjectRepository.CreateOrgPageInfo;
+import com.ObjectRepository.HomePage;
+import com.ObjectRepository.OrgInfoPage;
 import com.Vtiger.generic.FakeData;
 import com.Vtiger.generic.PropertyFile;
 import com.Vtiger.generic.WebDriverUtil;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-//Dropdown organization or verify the name in organization
+public class Create_Organization_DD {
+	static WebDriver driver;
 
-public class Create_Organization_DropDTest {
-	static	WebDriver driver=null;
-	public static void main(String[] args) throws Throwable {
-		PropertyFile datafetch=new PropertyFile();
-		String browser=datafetch.fetchpro("browser");
-		if(browser.equals("chrome")){
-			WebDriverManager.chromedriver().setup();
-			driver=new ChromeDriver();
+	public static void main(String[] args) throws IOException, InterruptedException {
+			PropertyFile datafetch=new PropertyFile();
+			String browser=datafetch.fetchpro("browser");
+			String url=datafetch.fetchpro("URL");
+			String un=datafetch.fetchpro("username");
+			String pwd=datafetch.fetchpro("password");
+			if(browser.equalsIgnoreCase("chrome")){
+				WebDriverManager.chromedriver().setup();
+				driver=new ChromeDriver();
+				}
+			else if(browser.equalsIgnoreCase("firefox")) {
+				WebDriverManager.firefoxdriver().setup();
+				driver=new FirefoxDriver();
+				}
+			else if(browser.equalsIgnoreCase("opera")) {
+				WebDriverManager.operadriver().setup();
+				driver=new OperaDriver();
+				}
+			WebDriverUtil util=new WebDriverUtil(driver);//creating the obj after initilizing the driver 
+//pass the driver for connection
+	util.pageLoad();
+	
+	util.maximizeWindow();
+	Thread.sleep(2000);
+	driver.get(url);
+	FakeData fakedata=new FakeData();
+	 String orgname=fakedata.orgname();
+HomePage homepage=new HomePage(driver);
+homepage.getOrglinkbutton().click();
+OrgInfoPage orgpageinfo=new OrgInfoPage(driver);
+orgpageinfo.getCreateorgplus().click();
+CreateOrgPageInfo createorg=new CreateOrgPageInfo(driver);
+	createorg.getOrgnametextbox().sendKeys(orgname);
+createorg.	
+	
+}}
 
-		}
-		else if(browser.equals("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
-			driver=new FirefoxDriver();}
-		else if(browser.equals("opera")) {
-			WebDriverManager.operadriver().setup();
-			driver=new OperaDriver();}
-		WebDriverUtil util=new WebDriverUtil(driver);//creating the obj after initilizing the driver
-Random ran=new Random();
-		int data=ran.nextInt(100);
-		FakeData fakedata=new FakeData();
-		String orgname=fakedata.orgname();
-		//driver.get("http://localhost:8888/index.php?action=Login&module=Users");
-		driver.get(datafetch.fetchpro("URL"));
-		//driver.manage().timeouts().implicitlyWait(Duration.);
-		//driver.manage().window().maximize();
-		util.maximizeWindow();
-		util.pageLoad();
-		driver.findElement(By.xpath("//input[@name=\"user_name\"]")).sendKeys(datafetch.fetchpro("username"),Keys.TAB,datafetch.fetchpro("password"),Keys.ENTER);
-		driver.findElement(By.xpath("//a[text()='Organizations']")).click();
+		
+driver.findElement(By.xpath("//a[text()='Organizations']")).click();
 		driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.name("accountname")).sendKeys(orgname);

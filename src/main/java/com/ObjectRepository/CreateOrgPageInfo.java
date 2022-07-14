@@ -13,14 +13,15 @@ PageFactory.initElements(driver,this);
 //Rule:2 locate all the elements with @findBy annotations
 @FindBy(name="accountname")	
 private WebElement orgnametextbox;
-@FindBy(xpath="//input[@title='Save [Alt+S]']")
-private WebElement savebutton;
-//Rule 4:provide getters to access the private members
 public WebElement getOrgnametextbox() {
 	return orgnametextbox;
 }
+@FindBy(xpath="//input[@title='Save [Alt+S]']")
+private WebElement savebutton;
+//Rule 4:provide getters to access the private members
 public WebElement getSavebutton() {
 	return savebutton;
 }
+
 
 }

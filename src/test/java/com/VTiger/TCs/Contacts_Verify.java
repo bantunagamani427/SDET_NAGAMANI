@@ -1,48 +1,62 @@
-package com.VTiger.TCs;
+package pom.VtigerTcs;
+
+import java.io.IOException;
 import java.util.Random;
-import java.util.Set;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.support.FindBy;
 
-import com.ObjectRepository.LoginPage;
+import com.ObjectRepository.CreateOrgPageInfo;
+import com.ObjectRepository.HomePage;
+import com.ObjectRepository.OrgInfoPage;
 import com.Vtiger.generic.FakeData;
 import com.Vtiger.generic.PropertyFile;
 import com.Vtiger.generic.WebDriverUtil;
-import io.github.bonigarcia.wdm.WebDriverManager;
-//verify the created contact with the name//
-public class Contacts_Verify  {	
-	static	WebDriver driver;
-public static void main(String[] args) throws Throwable {
-	PropertyFile datafetch=new PropertyFile();
-	String browser=datafetch.fetchpro("browser");
-	if(browser.equals("chrome")){
-		WebDriverManager.chromedriver().setup();
-		driver=new ChromeDriver();
-	}
-	else if(browser.equals("firefox")) {
-		WebDriverManager.firefoxdriver().setup();
-		driver=new FirefoxDriver();}
-	else if(browser.equals("opera")) {
-		WebDriverManager.operadriver().setup();
-		driver=new OperaDriver();}
-	WebDriverUtil util=new WebDriverUtil(driver);//create the object after initilizing the driver
-	Random ran=new Random();
-	int data=ran.nextInt(100);
-	FakeData fakedata=new FakeData();
-	String firstname=fakedata.firstname();
-	String lastname=fakedata.lastname();
-	//driver.get("http://localhost:8888/index.php?action=Login&module=Users");
-	util.pageLoad();
-	util.maximizeWindow();
-	//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-	LoginPage login=new LoginPage();
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Create_Organization_DD {
+	static WebDriver driver;
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+			PropertyFile datafetch=new PropertyFile();
+			String browser=datafetch.fetchpro("browser");
+			String url=datafetch.fetchpro("URL");
+			String un=datafetch.fetchpro("username");
+			String pwd=datafetch.fetchpro("password");
+			if(browser.equalsIgnoreCase("chrome")){
+				WebDriverManager.chromedriver().setup();
+				driver=new ChromeDriver();
+				}
+			else if(browser.equalsIgnoreCase("firefox")) {
+				WebDriverManager.firefoxdriver().setup();
+				driver=new FirefoxDriver();
+				}
+			else if(browser.equalsIgnoreCase("opera")) {
+				WebDriverManager.operadriver().setup();
+				driver=new OperaDriver();
+				}
+			WebDriverUtil util=new WebDriverUtil(driver);//creating the obj after initilizing the driver 
+//pass the driver for connection
+	util.pageLoad();
+	
+	util.maximizeWindow();
+	Thread.sleep(2000);
+	driver.get(url);
+	FakeData fakedata=new FakeData();
+	 String orgname=fakedata.orgname();
+HomePage homepage=new HomePage(driver);
+homepage.getOrglinkbutton().click();
+OrgInfoPage orgpageinfo=new OrgInfoPage(driver);
+orgpageinfo.getCreateorgplus().click();
+CreateOrgPageInfo createorg=new CreateOrgPageInfo(driver);
+	createorg.getOrgnametextbox().sendKeys(orgname);
+createorg.	
+	
+}}
+
 	//login.getUsernametextbox().sendKeys(data);
 	//login.getPaaswordtxtbox(datafetch.fetchpro("password"));
 	login.getLoginbutton();

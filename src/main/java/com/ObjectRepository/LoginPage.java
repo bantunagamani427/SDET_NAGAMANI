@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage {
 WebDriver driver;	
 //Rule 3:Create the constructor to initilise the page elements	
-public LoginPage() {
+public LoginPage(WebDriver driver) {
 PageFactory.initElements(driver,this);	
 }	
 //Rule 2:loacte all the elements with @findby annotation and make that elements as private
