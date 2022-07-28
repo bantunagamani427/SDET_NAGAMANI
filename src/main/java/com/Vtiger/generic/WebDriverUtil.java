@@ -1,99 +1,98 @@
 package com.Vtiger.generic;
 
+import java.io.File;
 import java.time.Duration;
+import java.util.Set;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 /**
  * @author :nagamani
  * @ description: this class is going to create all the classes to reduce the code
  */
 public class WebDriverUtil {
-	WebDriver driver;
-	/**
-	 * @author :nagamani
-	 * @description :this constructor is going to initilize the non static property of webdriver
-	 */
-	public WebDriverUtil(WebDriver driver) {
-		this.driver=driver;	
-	}
-	/**
-	 * @author :nagamani
-	 * @description :this method is going to maximize the window
-	 */
-	public void maximizeWindow() 
+	WebDriver driver ;
+
+	public WebDriverUtil(WebDriver driver)
 	{
-		driver.manage().window().maximize();	
+		this.driver=driver;
 	}
-	/**
-	 * @author :nagamani
-	 * @description:this method is going to load the page
-	 */
-	public void pageLoad() {
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));	 
+
+	public void maximiseWindow() {
+		driver.manage().window().maximize();
 	}
-	/**
-	 * @author :nagamani
-	 * @description :this method is  going to  wait and Click the element if implicit wait is not working
-	 */
-	public void waitanClick(WebElement element) {
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));
+
+	public void pageLoadTimeout() 
+	{
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+	}
+
+	public void waitankclick(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
 	}
-	/**
-	 * @author :Nagamani
-	 * @description :this method is going to select the dropdown by index mathod
-	 */
-	public void select_DD(WebElement element,int index) {
-		Select s= new Select(element);
-		s.selectByIndex(index);
+
+	public void selectDD(String visibletext,WebElement element) 
+	{
+		Select select = new Select(element);
+		select.selectByVisibleText(visibletext);
 	}
-	/**
-	 *@author :nagamani 
-	 * @description :this method is going to select dropdown  by selecting string
-	 */
-	public void select_DD(WebElement element, String value) {
-		Select s=new Select(element);
-		s.selectByValue(value);
+
+	public void selectDD(WebElement element,String value) 
+	{
+		Select select = new Select(element);
+		select.selectByValue(value);
 	}
-	/**
-	 * @author nagamani
-	 * @description :this method is going to select the dropdown by selecting the visible text 
-	 */
-	public void select_DD(String visibletext,WebElement element) {
-		Select s=new Select(element);
-		s.selectByValue(visibletext);
+
+	public void selectDD(WebElement element,int index) 
+	{
+		Select select = new Select(element);
+		select.selectByIndex(index);
 	}
-	/**
-	 * @author nagamani
-	 * @description :this method is going to create move the element to the particular element
-	 */
-	public void moveToElement(WebElement element) {
-		Actions act=new Actions(driver);
-		act.moveToElement(element).build().perform();
+
+	public void moveToelement(WebElement element) {
+		Actions action = new Actions(driver);
+		action.moveToElement(element).build().perform();
 	}
-	/**
-	 * @author nagamani
-	 * description : This method is going to close the browser
-	 */
-	public void browser() {
+
+	public void closeBrowser() {
 		driver.close();
-	} 
-	/**
-	 * @author nagamani
-	 * description: this mthod is going to ceate to accept the alert popup
-	 */
-	public void refreshPge() {
+	}
+
+	public void dragAndDrop(WebElement source,WebElement target) {
+		Actions action = new Actions(driver);
+		action.dragAndDrop(source, target).build().perform();
+	}
+
+	public void refreshPage() {
 		driver.navigate().refresh();
 	}
-	/**
-	 * @author nagamani
-	 * description : this method is going to create accept the alert
-	 */
+
 	public void acceptAlert() {
 		driver.switchTo().alert().accept();
- }}
+		
+	}
+	
+	public void TakeScreenshot() {
+		TakesScreenshot ts=(TakesScreenshot)driver;
+		 File src = ts.getScreenshotAs(OutputType.FILE);
+	}
+
+	public WebDriver switchWindow(String Wh) 
+	{
+		driver.switchTo().window(Wh);
+		return driver.switchTo().window(Wh);
+
+	}
+
+ }
+	
+		
+	

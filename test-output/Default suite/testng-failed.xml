@@ -3,11 +3,17 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="practice.Reports">
+      <class name="com.VTiger.TCs.TC_2_Delete_OrganizationTest">
         <methods>
-          <include name="reportCreation"/>
+          <include name="logoutfromApp"/>
+          <include name="launchBrowser"/>
+          <include name="logintoApp"/>
+          <include name="connectTODatabase"/>
+          <include name="closeDataBase"/>
+          <include name="deleteOrg"/>
+          <include name="closeBrowser"/>
         </methods>
-      </class> <!-- practice.Reports -->
+      </class> <!-- com.VTiger.TCs.TC_2_Delete_OrganizationTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
